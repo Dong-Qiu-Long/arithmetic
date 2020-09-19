@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>标准快排</title>
+</head>
+<body>
+	<script>
+		var arr = [3,4,6,2,7,9,10,1,4,8,12,16,18]
+		function jh(arr,star,end){
+			var a = arr[star];
+			arr[star] = arr[end];
+			arr[end] = a
+		}
+		function kp(root ,star , end){
+			if(star >= end-1) return;
+			var left = star;
+			var right = end;
+			do{
+				do left++ ;while(left < right && root[left] < root[star]); //找比第一个大的
+				do right-- ;while (left < right && root[star] < root[right]);//找比第一个小的
+				if(left < right){
+					jh(root,left,right)
+				}
+			}while(left < right);
+			var S = left == right ? right-1 : right;
+			jh(root,star,S)
+			kp(root,star,S);
+			kp(root,S+1,end);
+			return root;
+		}
+		console.log(kp(arr,0,arr.length))
+	</script>
+</body>
+</html>

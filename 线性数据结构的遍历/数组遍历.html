@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>数组遍历</title>
+</head>
+<body>
+	<script>
+		var arr = [1,2,3,4,5,6,7]
+		function bl(root,i){
+			if(root == null || arr.length <= i) return false;//arr.length >= i 时说明已经遍历完了
+			console.log(root[i])
+			return bl(root,i+1)
+		}
+		bl(arr,0)
+	</script>
+</body>
+</html>
