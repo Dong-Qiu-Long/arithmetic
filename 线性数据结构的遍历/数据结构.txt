@@ -1,0 +1,6 @@
+栈：箱子
+   先进去的最后出来 进口是出口
+   arr.push:进   arr.pop：出
+队列：管道
+   先进先出  
+    arr.unshift   arr.shift
