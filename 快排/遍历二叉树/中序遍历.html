@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>中序遍历</title>
+</head>
+<body>
+	<script>
+		function Node(val){
+			this.vaule = val;
+			this.left = null;
+			this.right = null;
+		}
+
+		var a = new Node('a');
+		var b = new Node('b');
+		var c = new Node('c');
+		var d = new Node('d');
+		var e = new Node('e');
+		var f = new Node('f');
+		var g = new Node('g');
+
+		a.left = b;
+		a.right = c;
+		b.left = d;
+		b.right = e;
+		c.left = f;
+		c.right = g;
+		//中序遍历
+		function bl(root){
+			if(root == null) return;
+			bl(root.left);
+			console.log(root.vaule);
+			bl(root.right)
+		}
+		console.log(bl(a))
+	</script>
+</body>
+</html>

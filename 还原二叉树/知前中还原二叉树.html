@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>index</title>
+</head>
+
+<body>
+	<script>
+		var qian = ['a', 'c', 'f', 'g', 'b', 'd', 'e'];
+		var zhong = ['f', 'c', 'g', 'a', 'd', 'b', 'e'];
+
+		function Node(val) {
+			this.value = val;
+			this.left = null;
+			this.right = null;
+		}
+
+		function fl(qian, zhong) {
+			if (qian == null || zhong == null || qian.length == 0 || qian.length == 0 || qian.length != zhong.length) return null;
+
+			var root = new Node(qian[0]); // 找根
+
+			var index = zhong.indexOf(root.value); //在根中查找根位置
+
+			var qianLeft = qian.slice(1,index+1); //前左分支
+			var qianRight = qian.slice(1+index,qian.length); //前右分支
+
+			var zhongLeft = zhong.slice(0,index); //中左分支
+			var zhongRight = zhong.slice(index+1,zhong.length); //中右分支
+
+			root.left = fl(qianLeft,zhongLeft);
+			root.right = fl(qianRight,zhongRight);
+
+			return root
+		}
+		console.log(fl(qian,zhong));
+	</script>
+</body>
+
+</html>
