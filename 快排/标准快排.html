@@ -1,36 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>标准快排</title>
 </head>
+
 <body>
 	<script>
-		var arr = [3,4,6,2,7,9,10,1,4,8,12,16,18]
-		function jh(arr,star,end){
+		var arr = [3, 4, 6, 2, 7, 9, 10, 1, 4, 8, 12, 16, 18]
+		//交换函数
+		function jh(arr, star, end) {
 			var a = arr[star];
 			arr[star] = arr[end];
 			arr[end] = a
 		}
-		function kp(root ,star , end){
-			if(star >= end-1) return;
-			var left = star;
-			var right = end;
-			do{
-				do left++ ;while(left < right && root[left] < root[star]); //找比第一个大的
-				do right-- ;while (left < right && root[star] < root[right]);//找比第一个小的
-				if(left < right){
-					jh(root,left,right)
+		//快排
+		function kp(arr, star, end) {
+			if (star >= end) return; //出口
+			var left = star;//左指针
+			var right = end;//右指针
+			do {
+				do left++; while (left < right && arr[left] < arr[star]);//从左向右查找 有大于第一个元素的 停止
+				do right--; while (left < right && arr[star] < arr[right]);//从右向左快排 有小与第一个元素停止
+				if (left < right) {//判断箭头是不是没有交错
+					jh(arr, left, right) //左边的大于第一个的值 和右边小于第一个的值交换
 				}
-			}while(left < right);
-			var S = left == right ? right-1 : right;
-			jh(root,star,S)
-			kp(root,star,S);
-			kp(root,S+1,end);
-			return root;
+			} while (left < right);
+			var S = left == right ? right - 1 : right; //中间位置
+			jh(arr, star, S) //开始和中间交换位置
+			kp(arr, star, S);//左边递归快排
+			kp(arr, S + 1, end);//右边递归快排
+			return arr; 
 		}
-		console.log(kp(arr,0,arr.length))
+		console.log(kp(arr, 0, arr.length))
 	</script>
 </body>
+
 </html>
