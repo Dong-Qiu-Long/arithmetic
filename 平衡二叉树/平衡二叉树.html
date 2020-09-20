@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>平衡二叉树</title>
+</head>
+<body>
+	<script>
+		//平衡二叉树
+		//1.根节点的左子树与右子树的高度差不能超过1；
+		//2.这颗二叉树的每个子树都符合第一条
+		
+		function Node(val){
+			this.value = val;
+			this.left = null;
+			this.right = null;
+		}
+
+		var a = new Node('a');
+		var b = new Node('b');
+		var c = new Node('c');
+		var d = new Node('d');
+		var f = new Node('f');
+		var g = new Node('g');
+		var e = new Node('e');
+		var h = new Node('h');
+		var u = new Node('u');
+
+		a.left = b;
+		a.right = c;
+		b.left = d;
+		b.right = f;
+		c.left = g;
+		c.right = e;
+		e.left = h;
+		h.left = u
+
+		function isb(root){
+			if(root === null) return true;
+			var leftDeep = getDeep(root.left);
+			var rightDeep = getDeep(root.right);
+			if(Math.abs(leftDeep - rightDeep) > 1){
+				return false
+			}else{
+				return isb(root.left) && isb(root.right)
+			}
+		}
+
+		function getDeep(root){
+			if(root == null) return 0;
+			var leftDeep = getDeep(root.left);
+			var rightDeep = getDeep(root.right);
+			return Math.max(leftDeep , rightDeep) + 1
+		}
+		console.log(isb(a))
+	</script>
+</body>
+</html>
