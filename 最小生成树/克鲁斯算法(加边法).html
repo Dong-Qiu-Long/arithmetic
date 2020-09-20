@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>加边法</title>
+</head>
+
+<body>
+	<script>
+		//克鲁斯算法(加边法)
+		//1.选择最短的边进行连接
+		//2.要保证连接的两边最少有一个是新的点
+		//3.或者两个都是新节点
+		//4.重复1-3直到将所有的点都连接到一起
+
+		function Node(val) {
+			this.vaule = val; //树元素的值
+			this.neighbor = []; //树元素的邻居
+		}
+
+		// 创建树元素
+		var a = new Node('a');
+		var b = new Node('b');
+		var c = new Node('c');
+		var d = new Node('d');
+		var e = new Node('e');
+
+		var pointSet = []; //树元素
+		var max = 2000; //最大距离
+		var distance = [    //树的距离
+			[0, 4, 7, max, max],
+			[4, 0, 8, 6, max],
+			[7, 8, 0, 5, max],
+			[max, 6, 5, 0, 7],
+			[max, max, max, 7, 0]
+		];
+
+		//添加树元素
+		pointSet.push(a);
+		pointSet.push(b);
+		pointSet.push(c);
+		pointSet.push(d);
+		pointSet.push(e);
+
+		function canLink(resultList, tempBegin, tempEnd) {
+			var beginIn = null;
+			var endIn = null;
+			for(var i = 0; i < resultList.length ; i ++){
+				if(resultList[i].indexOf(tempBegin) > -1){
+					beginIn = resultList[i];
+				}
+				if(resultList[i].indexOf(tempEnd) > -1){
+					endIn = resultList[i]
+				}
+				  
+			}
+			if(beginIn != null && endIn != null && beginIn == endIn){
+				return false
+			}
+			return true
+		}
+		function link(resultList, tempBegin, tempEnd){
+			var beginIn = null;
+			var endIn = null;
+			for(var i = 0; i < resultList.length ; i ++){
+				if(resultList[i].indexOf(tempBegin) > -1){
+					beginIn = resultList[i];
+				}
+				if(resultList[i].indexOf(tempEnd) > -1){
+					endIn = resultList[i]
+				}
+				  
+			}
+			if(beginIn == null && endIn == null){
+				var newArr = [];
+				newArr.push(beginIn);
+				newArr.push(endIn);
+				resultList.push(newArr);
+			}
+			else if(beginIn != null && endIn == null){
+				var newArr = [];
+				newArr.push(endIn);
+			}
+			else if(beginIn == null && endIn != null){
+				var newArr = [];
+				newArr.push(beginIn)
+			}
+			else if(beginIn != null && endIn != null && beginIn != endIn){
+			  var allIn =	beginIn.concat(endIn);
+				var needRemove = resultList.indexOf(endIn);
+				resultList.splice(needRemove,1);
+				needRemove = resultList.indexOf(beginIn);
+				resultList.splice(needRemove,1);
+				resultList.push(allIn);
+			}
+			console.log(tempBegin)
+			tempBegin.neighbor.push(tempEnd);
+			tempEnd.neighbor.push(tempBegin)
+		}	
+		function kruskal(pointSet, distance) {
+			var resultList = [];
+			while (true) {
+				var minDis = max
+				var begin = null;
+				var end = null;
+				for (var i = 0; i < distance.length; i++) {
+					for (var j = 0; j < distance[i].length; j++) {
+						var tempBegin = pointSet[i];
+						var tempEnd = pointSet[j];
+						if (i != j && distance[i][j] < minDis && canLink(resultList, tempBegin, tempEnd)) {
+							minDis = distance[i][j];
+							begin = tempBegin;
+							end = tempEnd
+						}
+					}
+				}
+				link(resultList, begin, end);
+				if(resultList.length == 1 && resultList[0].length == pointSet.length){
+					break;
+				}
+			}
+		}
+		kruskal(pointSet, distance)
+	</script>
+</body>
+
+</html>

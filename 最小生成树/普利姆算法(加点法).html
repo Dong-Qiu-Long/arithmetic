@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=	, initial-scale=1.0">
+	<title>普利姆算法(加点法)</title>
+</head>
+
+<body>
+	<script>
+
+		//普利姆算法
+		//1.任意选一个点作为起点
+		//2.找到以前选中点作为起点路劲最短
+		//3.如果这个边的另一端没有被联通进来，那么就链接
+		//4.如果这个边的另一端早就被连起来了。则看倒数第二短边
+		//5.重复2-4直到将所有的点都联通为止
+
+		function Node(val) {
+			this.vaule = val; //树元素的值
+			this.neighbor = []; //树元素的邻居
+		}
+		// 创建树元素
+		var a = new Node('a');
+		var b = new Node('b');
+		var c = new Node('c');
+		var d = new Node('d');
+		var e = new Node('e');
+
+		var pointSet = []; //树元素
+		var max = 2000; //最大距离
+		var distance = [    //树的距离
+			[0, 4, 7, max, max],
+			[4, 0, 8, 6, max],
+			[7, 8, 0, 5, max],
+			[max, 6, 5, 0, 7],
+			[max, max, max, 7, 0]
+		];
+
+		//添加树元素
+		pointSet.push(a);
+		pointSet.push(b);
+		pointSet.push(c);
+		pointSet.push(d);
+		pointSet.push(e);
+
+		//创建树路劲
+		function prim(pointSet, distance, start) {
+			var nowPointSet = []; //链接数元素
+			nowPointSet.push(start); // 添加链接树
+			while (true) {
+				//查找最近树元素
+				var minDisNode = getMinDisNode(pointSet, distance, nowPointSet);
+				//添加树链接
+				nowPointSet.push(minDisNode);
+				//创建树的长度和树元素的长度相等跳出循环
+				if (nowPointSet.length == pointSet.length) {
+					break
+				}
+			}
+		}
+
+		//查找最近树元素
+		function getMinDisNode(pointSet, distance, nowPointSet) {
+			var fromNode = null; // 起点
+			var minDisNode = null; //距离起点最短的元素
+			var minDis = max; //记录最小长度
+			//遍历已连接元素
+			for (var i = 0; i < nowPointSet.length; i++) {
+				//获取已连接元素在树元素内的位置
+				var nowPointIndex = getIndex(nowPointSet[i]);
+				//遍历已有元素距离其他元素最短距离元素
+				for(var j = 0; j < distance[nowPointIndex].length; j++){
+					var thisNode = pointSet[j];//记录距离起点的其他元素
+					//判断距离起点的其他元素没有在新元树内 且距离小于minDis
+					if(nowPointSet.indexOf(thisNode) < 0 && distance[nowPointIndex][j] < minDis){
+						fromNode = nowPointSet[i]; //记录起点
+						minDisNode = thisNode; // 得到距离起点最短距离元素
+						minDis = distance[nowPointIndex][j] //记录最短距离
+					} 
+				}
+			}
+			fromNode.neighbor.push(minDisNode); 
+			minDisNode.neighbor.push(fromNode);
+			return minDisNode
+		}
+		
+		function getIndex(str) {
+			for (var i = 0; i < pointSet.length; i++) {
+				if (str == pointSet[i]) {
+					return i
+				}
+			}
+		}
+		prim(pointSet, distance, c)
+	</script>
+</body>
+
+</html>

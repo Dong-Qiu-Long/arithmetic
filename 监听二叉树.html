@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		function Node(val){
+			this.value = val;
+			this.left = null;
+			this.right = null;
+		}
+
+		var a = new Node('a');
+		var b = new Node('b');
+		var c = new Node('c');
+		var d = new Node('d');
+		var e = new Node('e');
+		var f = new Node('f');
+		var g = new Node('g');
+
+		a.left = b;
+		a.right = c;
+		b.left = d;
+		b.right = e;
+		c.left = f;
+		c.right = g;
+
+		var a1 = new Node('a');
+		var b1 = new Node('b');
+		var c1 = new Node('c');
+		var d1 = new Node('d');
+		var e1 = new Node('e');
+		var f1 = new Node('f');
+		var g1 = new Node('g');
+
+		a1.left = b1;
+		a1.right = c1;
+		b1.left = d1;
+		b1.right = e1;
+		c1.left = f1;
+		c1.right = g1;
+		g1.value = 'g1'
+		//二叉树监听
+		var diffList = [];
+		function diffTree(root1,root2,arr){
+			if(root1 == root2)return root2;
+			if(root1 == null && root2 != null){
+				//删除
+				arr.push({
+					type:'添加',
+					origin:null,
+					now:root2,
+				})
+			}else if(root1 != null && root2 == null){
+				//添加
+				arr.push({
+					type:'删除',
+					origin:root1,
+					now: null
+				})
+			}else if(root1.value != root2.value){
+				//修改
+				arr.push({
+					type:'修改',
+					origin:root1,
+					now:root2
+				})
+			}else{
+				diffTree(root1.left,root2.left,diffList);
+				diffTree(root1.right,root2.right,diffList);
+			}
+		}
+		diffTree(a1,a,diffList);
+		console.log(diffList)
+	</script>
+</body>
+</html>
